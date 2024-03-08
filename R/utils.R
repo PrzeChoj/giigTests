@@ -1,5 +1,7 @@
 #' Is `el` the element of the `list`.
 #'
+#' @noRd
+#'
 #' @examples
 #' is_in_list(c(1,2,3), list(c(1,2,3), c(3,2,1))) # TRUE
 #' is_in_list(c(1,2,3), list(c(2,3,1), c(3,2,1))) # FALSE
@@ -8,6 +10,8 @@ is_in_list <- function(el, list) {
 }
 
 #' Change the partition from indexes of the edges to edges itself.
+#'
+#' @noRd
 #'
 #' @examples
 #' p <- 4
@@ -22,6 +26,8 @@ PartitionToEdgeColorClasses <- function(partition, edges) {
 #' Get all possible edges for a graph with p vertices
 #'
 #' @param p Number of vertices
+#'
+#' @noRd
 #'
 #' @example construct_edges(5) # 10 edges
 construct_edges <- function(p) {
