@@ -48,4 +48,21 @@ test_that("Ishi test works", {
 
   # All three
   testthat::expect_equal(is_Ishi_space(n, cumsum_n, matrix_list), TRUE)
+
+
+
+  # not Ishi
+  p <- 16
+
+  vPartition <- list(1:16)
+  ePartition <- list(
+    c(1,30,76,55,93,106,117,118),
+    c(3,16,57,66,95,100,115,120),
+    c(2,17,67,56,94,101,116,119),
+    c(18,34,45,5,110,102,113,97),
+    c(7,20,32,43,99,104,108,111),
+    c(6,4,21,19,31,33,44,46,96,98,105,103,107,109,114,112)
+  )
+
+  testthat::expect_equal(is_Ishi_space(p, p, partitions_to_base_matrices(vPartition, ePartition)), FALSE)
 })

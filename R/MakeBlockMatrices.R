@@ -18,6 +18,8 @@ partitions_to_base_matrices <- function(vPartition, ePartition){
   n <- unname(sapply(vPartition, length))
   cumsum_n <- cumsum(n)
 
+  allEdges <- construct_edges(cumsum_n[length(cumsum_n)])
+
   # structure of matrix_list
   matrix_list <- list()
   r <- length(n)
@@ -66,11 +68,11 @@ partitions_to_base_matrices <- function(vPartition, ePartition){
       matrix_list[[proper_vertex_colour]][[proper_vertex_colour]][[new_base_matrix_index]] <- new_base_matrix
     }
     if(length(proper_vertex_colour) == 2){
-      l <- vertexColours[1]
-      k <- vertexColours[2]
+      l <- proper_vertex_colour[1]
+      k <- proper_vertex_colour[2]
       if (k > l){
-        l <- vertexColours[2]
-        k <- vertexColours[1]
+        l <- proper_vertex_colour[2]
+        k <- proper_vertex_colour[1]
       }
 
       row_previous_vertex_number <- ifelse(l == 1, 0, cumsum_n[l - 1])
@@ -93,6 +95,8 @@ partitions_to_base_matrices <- function(vPartition, ePartition){
       matrix_list[[l]][[k]][[new_base_matrix_index]] <- new_base_matrix
     }
   }
+
+  matrix_list
 }
 
 
