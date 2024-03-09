@@ -108,7 +108,17 @@ is_M2_condition_satisfied <- function(n, cumsum_n, matrix_list){
 }
 
 #' Check if the given space is Ishi space
-is_Ishi_space <- function(n, cumsum_n, matrix_list){
+#'
+#' @examples
+#' vPartition <- list(c(1,2,3,4), c(5,6), c(7))
+#' ePartition <- list(c(1, 12), c(4, 9, 14, 17), c(19), c(20, 21))
+#'
+#' is_Ishi_space(vPartition, ePartition)
+is_Ishi_space <- function(vPartition, ePartition){
+  n <- sapply(vPartition, length)
+  cumsum_n <- cumsum(n)
+  matrix_list <- partitions_to_base_matrices(vPartition, ePartition)
+
   is_M0_condition_satisfied(n, cumsum_n, matrix_list) &&
     is_M1_condition_satisfied(n, cumsum_n, matrix_list) &&
     is_M2_condition_satisfied(n, cumsum_n, matrix_list)

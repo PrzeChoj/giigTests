@@ -3,14 +3,9 @@ test_that("Ishi test works", {
   n <- c(2,3,1)
   cumsum_n <- cumsum(n)
 
-  l_1_1 <- list(matrix(c(1,0,0,1), nrow = n[1], byrow = TRUE), matrix(c(0,1,1,0), nrow = n[1], byrow = TRUE))
-  l_2_2 <- list(matrix(c(1,0,0,0,1,0,0,0,1), nrow = n[2], byrow = TRUE), matrix(c(0,1,1,1,0,1,1,1,0), nrow = n[2], byrow = TRUE))
-  l_3_3 <- list(matrix(c(1), nrow = n[3], byrow = TRUE))
-  l_2_1 <- list(matrix(c(1,0,1,0,0,1), nrow = n[2], byrow = TRUE), matrix(c(0,1,0,1,1,0), nrow = n[2], byrow = TRUE))
-  l_3_1 <- list()
-  l_3_2 <- list(matrix(c(1,1,1), nrow = n[3], byrow = TRUE))
-
-  matrix_list <- list(list(l_1_1), list(l_2_1, l_2_2), list(l_3_1, l_3_2, l_3_3))
+  vPartition <- list(c(1,2), c(3,4,5), c(6))
+  ePartition <- list(c(1), c(2,3,8), c(4,6,7), c(10,11,13), c(12,14,15))
+  matrix_list <- partitions_to_base_matrices(vPartition, ePartition)
 
   # (M0)
   testthat::expect_equal(is_M0_condition_satisfied(n, cumsum_n, matrix_list), TRUE)
@@ -22,20 +17,15 @@ test_that("Ishi test works", {
   testthat::expect_equal(is_M2_condition_satisfied(n, cumsum_n, matrix_list), TRUE)
 
   # All three
-  testthat::expect_equal(is_Ishi_space(n, cumsum_n, matrix_list), FALSE)
+  testthat::expect_equal(is_Ishi_space(vPartition, ePartition), FALSE)
 
   # EXP2, Ishi
   n <- c(4,2,1)
   cumsum_n <- cumsum(n)
 
-  l_1_1 <- list(diag(n[1]), matrix(c(0,1,0,0,1,0,0,0,0,0,0,1,0,0,1,0), nrow = n[1], byrow = TRUE))
-  l_2_2 <- list(diag(n[2]), matrix(c(0,1,1,0), nrow = n[2], byrow = TRUE))
-  l_3_3 <- list(diag(n[3]))
-  l_2_1 <- list(matrix(c(1,1,0,0,0,0,1,1), nrow = n[2], byrow = TRUE))
-  l_3_1 <- list()
-  l_3_2 <- list(matrix(c(1,1), nrow = n[3], byrow = TRUE))
-
-  matrix_list <- list(list(l_1_1), list(l_2_1, l_2_2), list(l_3_1, l_3_2, l_3_3))
+  vPartition <- list(c(1,2,3,4), c(5,6), c(7))
+  ePartition <- list(c(1, 12), c(4, 9, 14, 17), c(19), c(20, 21))
+  matrix_list <- partitions_to_base_matrices(vPartition, ePartition)
 
   # (M0)
   testthat::expect_equal(is_M0_condition_satisfied(n, cumsum_n, matrix_list), TRUE)
@@ -47,7 +37,7 @@ test_that("Ishi test works", {
   testthat::expect_equal(is_M2_condition_satisfied(n, cumsum_n, matrix_list), TRUE)
 
   # All three
-  testthat::expect_equal(is_Ishi_space(n, cumsum_n, matrix_list), TRUE)
+  testthat::expect_equal(is_Ishi_space(vPartition, ePartition), TRUE)
 
 
 
@@ -64,5 +54,5 @@ test_that("Ishi test works", {
     c(6,4,21,19,31,33,44,46,96,98,105,103,107,109,114,112)
   )
 
-  testthat::expect_equal(is_Ishi_space(p, p, partitions_to_base_matrices(vPartition, ePartition)), FALSE)
+  testthat::expect_equal(is_Ishi_space(vPartition, ePartition), FALSE)
 })
