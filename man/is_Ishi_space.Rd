@@ -4,8 +4,19 @@
 \alias{is_Ishi_space}
 \title{Check if the given space is Ishi space}
 \usage{
-is_Ishi_space(n, cumsum_n, matrix_list)
+is_Ishi_space(vPartition, ePartition)
+}
+\arguments{
+\item{vPartition}{partition of the vertices}
+
+\item{ePartition}{partition of the edges}
 }
 \description{
 Check if the given space is Ishi space
+}
+\examples{
+vPartition <- list(c(1, 2, 3, 4), c(5, 6), c(7))
+ePartition <- list(c(1, 12), c(4, 9, 14, 17), c(19), c(20, 21))
+
+is_Ishi_space(vPartition, ePartition)
 }

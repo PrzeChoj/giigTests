@@ -109,6 +109,11 @@ is_M2_condition_satisfied <- function(n, cumsum_n, matrix_list) {
 
 #' Check if the given space is Ishi space
 #'
+#' @param vPartition partition of the vertices
+#' @param ePartition partition of the edges
+#'
+#' @export
+#'
 #' @examples
 #' vPartition <- list(c(1, 2, 3, 4), c(5, 6), c(7))
 #' ePartition <- list(c(1, 12), c(4, 9, 14, 17), c(19), c(20, 21))
