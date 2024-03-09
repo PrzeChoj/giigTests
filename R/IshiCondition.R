@@ -22,6 +22,8 @@ vector_in_span <- function(v, A) { # TODO: This can be done faster for all 0-1 m
 #' @param A matrix
 #' @param BaseMatrices a list of matrices
 #'
+#' @noRd
+#'
 #' @examples
 #' BaseMatrices <- list(matrix(c(1,0,0,1), nrow = n[1], byrow = TRUE), matrix(c(0,1,1,0), nrow = n[1], byrow = TRUE))
 #' A <- - 17.3 * BaseMatrices[[1]] + 0.4 * BaseMatrices[[2]]
@@ -44,6 +46,7 @@ isAinSpanBaseMatrices_list <- function(A, BaseMatrices) {
 #' Check whether (M0) condition is satisfied
 #'
 #' So, check if the identity matrices can be spanned by diagonal
+#' @noRd
 is_M0_condition_satisfied <- function(n, cumsum_n, matrix_list){
   r <- length(cumsum_n)
   for (k in 1:r) {
@@ -55,6 +58,7 @@ is_M0_condition_satisfied <- function(n, cumsum_n, matrix_list){
 }
 
 #' Check whether (M1) condition is satisfied
+#' @noRd
 is_M1_condition_satisfied <- function(n, cumsum_n, matrix_list){
   r <- length(cumsum_n)
   for (k in 1:r) {
@@ -75,6 +79,7 @@ is_M1_condition_satisfied <- function(n, cumsum_n, matrix_list){
 }
 
 #' Check whether (M2) condition is satisfied
+#' @noRd
 is_M2_condition_satisfied <- function(n, cumsum_n, matrix_list){
   r <- length(cumsum_n)
   if (r < 2){

@@ -21,6 +21,9 @@ test_that("Ishi test works", {
   # (M2)
   testthat::expect_equal(is_M2_condition_satisfied(n, cumsum_n, matrix_list), TRUE)
 
+  # All three
+  testthat::expect_equal(is_Ishi_space(n, cumsum_n, matrix_list), FALSE)
+
   # EXP2, Ishi
   n <- c(4,2,1)
   cumsum_n <- cumsum(n)
