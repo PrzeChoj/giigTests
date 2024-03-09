@@ -3,8 +3,8 @@
 #' @noRd
 #'
 #' @examples
-#' is_in_list(c(1,2,3), list(c(1,2,3), c(3,2,1))) # TRUE
-#' is_in_list(c(1,2,3), list(c(2,3,1), c(3,2,1))) # FALSE
+#' is_in_list(c(1, 2, 3), list(c(1, 2, 3), c(3, 2, 1))) # TRUE
+#' is_in_list(c(1, 2, 3), list(c(2, 3, 1), c(3, 2, 1))) # FALSE
 is_in_list <- function(el, list) {
   return(any(sapply(list, function(x) identical(x, el))))
 }
@@ -16,7 +16,7 @@ is_in_list <- function(el, list) {
 #' @examples
 #' p <- 4
 #' edges <- construct_edges(p)
-#' allPartitions <- partitions::listParts(p*(p-1)/2) # All possible colorings of edges
+#' allPartitions <- partitions::listParts(p * (p - 1) / 2) # All possible colorings of edges
 #' myPartition <- allPartitions[[7]] # this is the partition of indices of the edges
 #' ECC <- PartitionToEdgeColorClasses(myPartition, edges) # this is the partition of the edges
 PartitionToEdgeColorClasses <- function(partition, edges) {
@@ -40,4 +40,3 @@ construct_edges <- function(p) {
   }
   return(pairs_list)
 }
-
