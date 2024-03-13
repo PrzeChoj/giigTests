@@ -27,9 +27,10 @@ PartitionToEdgeColorClasses <- function(partition, edges) {
 #'
 #' @param p Number of vertices
 #'
-#' @noRd
+#' @export
 #'
-#' @example construct_edges(5) # 10 edges
+#' @examples
+#' construct_edges(5) # 10 edges
 construct_edges <- function(p) {
   pairs_list <- list()
 

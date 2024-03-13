@@ -11,7 +11,7 @@
 #'     3, 2
 #'   ), nrow = 3, byrow = T)
 #' ) # TRUE
-vector_in_span <- function(v, A) { # TODO: This can be done faster for all 0-1 matrices
+vector_in_span <- function(v, A) { # TODO: This can be done faster for all 0-1 matrices. Remember the (M1) is not for 0-1 matrices, but (M0) and (M2) are.
   augmented_matrix <- cbind(A, v)
   return(rankMatrix(augmented_matrix)[1] == rankMatrix(A)[1])
 }
@@ -69,8 +69,11 @@ is_M1_condition_satisfied <- function(n, cumsum_n, matrix_list) {
         next
       }
       for (i in 1:length(list_of_interest)) {
-        if (!isAinSpanBaseMatrices_list(list_of_interest[[i]] %*% t(list_of_interest[[i]]), target_space)) {
-          return(FALSE)
+        for (j in i:length(list_of_interest)) {
+          multiplied_matrix <- list_of_interest[[i]] %*% t(list_of_interest[[j]])
+          if (!isAinSpanBaseMatrices_list(multiplied_matrix + t(multiplied_matrix), target_space)) { # Watch out if `vector_in_span()` will be done speciffic for 0-1 matrices. This is not a 0-1 matrix
+            return(FALSE)
+          }
         }
       }
     }
@@ -96,7 +99,8 @@ is_M2_condition_satisfied <- function(n, cumsum_n, matrix_list) {
         }
         for (i in 1:length(list_of_interest_1)) {
           for (j in 1:length(list_of_interest_2)) {
-            if (!isAinSpanBaseMatrices_list(list_of_interest_1[[i]] %*% t(list_of_interest_2[[j]]), target_space)) {
+            multiplied_matrix <- list_of_interest_1[[i]] %*% t(list_of_interest_2[[j]])
+            if (!isAinSpanBaseMatrices_list(multiplied_matrix, target_space)) {
               return(FALSE)
             }
           }
@@ -122,7 +126,15 @@ is_M2_condition_satisfied <- function(n, cumsum_n, matrix_list) {
 is_Ishi_space <- function(vPartition, ePartition) {
   n <- sapply(vPartition, length)
   cumsum_n <- cumsum(n)
-  matrix_list <- partitions_to_base_matrices(vPartition, ePartition)
+
+  matrix_list <- tryCatch(
+    partitions_to_base_matrices(vPartition, ePartition),
+    notEdgeRegular = function(c) NULL
+  )
+
+  if(is.null(matrix_list)){
+    return(FALSE)
+  }
 
   is_M0_condition_satisfied(n, cumsum_n, matrix_list) &&
     is_M1_condition_satisfied(n, cumsum_n, matrix_list) &&

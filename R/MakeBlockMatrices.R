@@ -35,7 +35,7 @@ partitions_to_base_matrices <- function(vPartition, ePartition) {
     matrix_list[[l]][[l]][[1]] <- diag(n[l])
   }
 
-  # edge colours
+  # edge colors
   for (e in ePartition) {
     edges_e <- matrix(numeric(2 * length(e)), ncol = 2)
     vertex_colour_e <- matrix(numeric(2 * length(e)), ncol = 2)
@@ -44,12 +44,14 @@ partitions_to_base_matrices <- function(vPartition, ePartition) {
       vertex_colour_e[i, ] <- c(inWhichPartIsIt(cumsum_n, allEdges[[e[i]]][1]), inWhichPartIsIt(cumsum_n, allEdges[[e[i]]][2]))
     }
     if (length(unique(c(vertex_colour_e))) > 2) {
-      rlang::abort("ePartition and vPartition not compatable")
+      rlang::abort("ePartition and vPartition are not edge regular; same color edges have more than 2 color vertices",
+                   class = "notEdgeRegular")
     }
     proper_vertex_colour <- sort(vertex_colour_e[1, ])
-    for (i in 1:length(e)) { # could be from 2, but that woud require additional if for length(e) == 1
+    for (i in 1:length(e)) { # could be starting at 2, but that would require additional if for length(e) == 1
       if (!all(proper_vertex_colour == sort(vertex_colour_e[i, ]))) {
-        rlang::abort("ePartition and vPartition not compatable; not edge regular")
+        rlang::abort("ePartition and vPartition are not edge regular; same color edges have different vertex colors",
+                     class = "notEdgeRegular")
       }
     }
 
@@ -104,6 +106,32 @@ inWhichPartIsIt <- function(cumsum_n, v) {
   # TODO: This is highly inefficient
   for (i in 1:length(cumsum_n)) {
     if (v <= cumsum_n[i]) {
+      return(i)
+    }
+  }
+}
+
+#' For a given v and w, find an i such that construct_edges(p)[[i]] = {v, w}
+#'
+#' @noRd
+#'
+#' @examples
+#' v <- 2
+#' w <- 3
+#' p <- 4
+#'
+#' construct_edges(p)[[which_edge_id_is_it(v, w, p)]] # this is {v, w}
+which_edge_id_is_it <- function(v, w, p){
+  if (w < v){
+    u <- v
+    v <- w
+    w <- u
+  }
+
+  allEdges <- construct_edges(p)
+
+  for (i in 1:length(allEdges)) {
+    if (all(allEdges[[i]] == c(v, w))){
       return(i)
     }
   }
