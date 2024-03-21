@@ -1,14 +1,17 @@
-# install.packages("remotes")
-# remotes::install_github("PrzeChoj/giigTests")
-# library(giigTests)
-# 
-# vPartition1 <- list(c(1, 3), c(2, 4))
-# vPartition2 <- list(c(1, 3), c(2), c(4))
-# ePartition1 <- list(c(1, 6), c(3,4))
-# ePartition2 <- list(c(1, 4), c(3,6),c(2))
-# 
-# is_Ishi_space(vPartition1, ePartition1)
-# is_Ishi_space(vPartition2, ePartition2) 
+#' @export
+#' @examples
+#'
+#' install.packages("remotes")
+#' remotes::install_github("PrzeChoj/giigTests")
+#' library(giigTests)
+#'
+#' vPartition1 <- list(c(1, 3), c(2, 4))
+#' vPartition2 <- list(c(1, 3), c(2), c(4))
+#' ePartition1 <- list(c(1, 6), c(3,4))
+#' ePartition2 <- list(c(1, 4), c(3,6),c(2))
+#'
+#' is_Ishi_space(vPartition1, ePartition1)
+#' is_Ishi_space(vPartition2, ePartition2)
 
 meet <- function(vPartition1,ePartition1,vPartition2,ePartition2){
   vertices <- union(vPartition1, vPartition2)
