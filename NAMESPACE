@@ -3,6 +3,8 @@
 export(construct_edges)
 export(is_Ishi_space)
 export(is_simplicial)
+export(join)
+export(meet)
 export(perfect_elimination_orderings)
 import(partitions)
 importFrom(Matrix,rankMatrix)
