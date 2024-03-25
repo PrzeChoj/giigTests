@@ -1,3 +1,5 @@
+#' Make meet of two graphs according to Gehrmann
+#'
 #' @export
 #' @examples
 #' vPartition1 <- list(c(1, 3), c(2, 4))
@@ -70,6 +72,8 @@ meet <- function(vPartition1, ePartition1, vPartition2, ePartition2) {
 }
 
 
+#' Make join of two graphs according to Gehrmann
+#'
 #' @export
 #' @examples
 #' vPartition1 <- list(c(1, 3), c(2, 4))

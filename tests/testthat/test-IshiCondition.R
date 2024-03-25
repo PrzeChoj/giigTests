@@ -57,4 +57,14 @@ test_that("Ishi test works", {
   )
 
   testthat::expect_equal(is_Ishi_space(vPartition, ePartition), FALSE)
+
+
+  # non-decomposable
+  vPartition <- list(c(1, 2, 3, 4))
+  ePartition <- list(c(1, 3, 4, 6))
+  testthat::expect_equal(is_Ishi_space(vPartition, ePartition), FALSE)
+
+  vPartition <- list(c(1, 3), c(2, 4))
+  ePartition <- list(c(1, 2, 3, 4, 5, 6))
+  testthat::expect_equal(is_Ishi_space(vPartition, ePartition), FALSE)
 })
