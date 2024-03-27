@@ -68,3 +68,21 @@ test_that("Ishi test works", {
   ePartition <- list(c(1, 2, 3, 4, 5, 6))
   testthat::expect_equal(is_Ishi_space(vPartition, ePartition), FALSE)
 })
+
+test_that("Non-edge regular are not Ishi", {
+  vPartition <- list(c(1, 2), c(3, 4))
+  ePartition <- list(c(1, 6))
+  testthat::expect_equal(is_Ishi_space(vPartition, ePartition), FALSE)
+
+  ePartition <- list(c(1, 6), c(2, 4))
+  testthat::expect_equal(is_Ishi_space(vPartition, ePartition), FALSE)
+
+  ePartition <- list(c(1, 6), c(2, 4), 3, 5)
+  testthat::expect_equal(is_Ishi_space(vPartition, ePartition), FALSE)
+})
+
+test_that("Non-color sorted are not Ishi", {
+  vPartition <- list(c(1, 4), c(2, 3))
+  ePartition <- list()
+  testthat::expect_equal(is_Ishi_space(vPartition, ePartition), FALSE)
+})
