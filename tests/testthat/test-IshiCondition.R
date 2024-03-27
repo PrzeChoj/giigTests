@@ -84,5 +84,13 @@ test_that("Non-edge regular are not Ishi", {
 test_that("Non-color sorted are not Ishi", {
   vPartition <- list(c(1, 4), c(2, 3))
   ePartition <- list()
-  testthat::expect_equal(is_Ishi_space(vPartition, ePartition), FALSE)
+  expect_equal(is_Ishi_space(vPartition, ePartition), FALSE)
+})
+
+test_that("is_color_order works", {
+  vPartition <- list(c(1, 2, 3, 4), c(5, 6), c(7))
+  expect_equal(is_color_order(vPartition), TRUE)
+
+  vPartition <- list(c(1, 2, 3, 4, 8), c(5, 6), c(7))
+  expect_equal(is_color_order(vPartition), FALSE)
 })

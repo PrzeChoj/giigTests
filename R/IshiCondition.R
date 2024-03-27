@@ -136,9 +136,34 @@ is_Ishi_space <- function(vPartition, ePartition) {
     return(FALSE)
   }
 
-  is_M0_condition_satisfied(n, cumsum_n, matrix_list) &&
+  is_color_order(vPartition) &&
+    is_M0_condition_satisfied(n, cumsum_n, matrix_list) &&
     is_M1_condition_satisfied(n, cumsum_n, matrix_list) &&
     is_M2_condition_satisfied(n, cumsum_n, matrix_list)
+}
+
+#' Check if the orfer of vPartition is proper
+#'
+#' @noRd
+#' @examples
+#' vPartition <- list(c(1, 2, 3, 4), c(5, 6), c(7))
+#' is_color_order(vPartition) # TRUE
+#'
+#' vPartition <- list(c(1, 2, 3, 4, 8), c(5, 6), c(7))
+#' is_color_order(vPartition) # FALSE
+is_color_order <- function(vPartition){
+  p <- max(sapply(vPartition, max))
+
+  j <- 1
+  for(i in 1:length(vPartition)){
+    if(!all(j:max(vPartition[[i]]) %in% vPartition[[i]])){
+      return(FALSE)
+    }
+
+    j <- max(vPartition[[i]]) + 1
+  }
+
+  return(TRUE)
 }
 
 
