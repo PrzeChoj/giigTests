@@ -45,13 +45,15 @@ partitions_to_base_matrices <- function(vPartition, ePartition) {
     }
     if (length(unique(c(vertex_colour_e))) > 2) {
       rlang::abort("ePartition and vPartition are not edge regular; same color edges have more than 2 color vertices",
-                   class = "notEdgeRegular")
+        class = "notEdgeRegular"
+      )
     }
     proper_vertex_colour <- sort(vertex_colour_e[1, ])
     for (i in 1:length(e)) { # could be starting at 2, but that would require additional if for length(e) == 1
       if (!all(proper_vertex_colour == sort(vertex_colour_e[i, ]))) {
         rlang::abort("ePartition and vPartition are not edge regular; same color edges have different vertex colors",
-                     class = "notEdgeRegular")
+          class = "notEdgeRegular"
+        )
       }
     }
 
@@ -121,8 +123,8 @@ inWhichPartIsIt <- function(cumsum_n, v) {
 #' p <- 4
 #'
 #' construct_edges(p)[[which_edge_id_is_it(v, w, p)]] # this is {v, w}
-which_edge_id_is_it <- function(v, w, p){
-  if (w < v){
+which_edge_id_is_it <- function(v, w, p) {
+  if (w < v) {
     u <- v
     v <- w
     w <- u
@@ -131,7 +133,7 @@ which_edge_id_is_it <- function(v, w, p){
   allEdges <- construct_edges(p)
 
   for (i in 1:length(allEdges)) {
-    if (all(allEdges[[i]] == c(v, w))){
+    if (all(allEdges[[i]] == c(v, w))) {
       return(i)
     }
   }

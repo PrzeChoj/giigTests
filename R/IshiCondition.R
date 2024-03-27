@@ -132,7 +132,7 @@ is_Ishi_space <- function(vPartition, ePartition) {
     notEdgeRegular = function(c) NULL
   )
 
-  if(is.null(matrix_list)){
+  if (is.null(matrix_list)) {
     return(FALSE)
   }
 
@@ -151,12 +151,12 @@ is_Ishi_space <- function(vPartition, ePartition) {
 #'
 #' vPartition <- list(c(1, 2, 3, 4, 8), c(5, 6), c(7))
 #' is_color_order(vPartition) # FALSE
-is_color_order <- function(vPartition){
+is_color_order <- function(vPartition) {
   p <- max(sapply(vPartition, max))
 
   j <- 1
-  for(i in 1:length(vPartition)){
-    if(!all(j:max(vPartition[[i]]) %in% vPartition[[i]])){
+  for (i in 1:length(vPartition)) {
+    if (!all(j:max(vPartition[[i]]) %in% vPartition[[i]])) {
       return(FALSE)
     }
 
