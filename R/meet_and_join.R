@@ -10,45 +10,6 @@
 #' meet(vPartition1, ePartition1, vPartition2, ePartition2)
 meet <- function(vPartition1, ePartition1, vPartition2, ePartition2) {
   vertices <- union(vPartition1, vPartition2)
-  p <- max(unlist(vertices))
-  e <- p * (p - 1) / 2
-  edges1 <- unique(unlist(ePartition1))
-  edges2 <- unique(unlist(ePartition2))
-  edges <- intersect(edges1, edges2)
-  for (i in 1:length(ePartition1)) {
-    if (!all(ePartition1[[i]] %in% edges)) {
-      id <- which(!ePartition1[[i]] %in% edges)
-      if (length(ePartition1[[i]] == 1)) {
-        ePartition1[[i]] <- NULL
-      } else {
-        ePartition1[[i]][id] <- NULL
-      }
-    }
-  }
-  # for (i in 1:length(ePartition2)) {
-  #   if (!all(ePartition2[[i]] %in% edges)) {
-  #     id <- which(!ePartition2[[i]] %in% edges)
-  #     if (length(ePartition2[[i]]) == 1) {
-  #       ePartition2[[i]] <- NULL
-  #     } else {
-  #       ePartition2[[i]][id] <- NULL
-  #     }
-  #   }
-  # }
-  len_eP2 <- length(ePartition2)
-  if (!all(unlist(ePartition2)%in%edges)){
-    while (len_eP2>0){
-      id <- which(!ePartition2[[i]] %in% edges)
-      if (length(ePartition2[[i]]) == 1) {
-        ePartition2[[i]] <- NULL
-      } else {
-        ePartition2[[i]][id] <- NULL
-      }
-      len_eP2 <- len_eP2 - 1
-    }
-  }
-
-
   while (any(table(unlist(vertices)) > 1)) {
     i <- which(table(unlist(vertices)) > 1)[1]
     el <- as.numeric(names(table(unlist(vertices)))[i])
@@ -64,6 +25,35 @@ meet <- function(vPartition1, ePartition1, vPartition2, ePartition2) {
     }
   }
 
+  edges1 <- unique(unlist(ePartition1))
+  edges2 <- unique(unlist(ePartition2))
+  edges <- intersect(edges1, edges2)
+  len_eP1 <- length(ePartition1)
+  if (!all(unlist(ePartition1)%in%edges)){
+    while (len_eP1>0){
+      i <-len_eP1
+      id <- which(!ePartition1[[i]] %in% edges)
+      if (length(ePartition1[[i]]) == 1) {
+        ePartition1[[i]] <- NULL
+      } else {
+        ePartition1[[i]][id] <- NULL
+      }
+      len_eP1 <- len_eP1 - 1
+    }
+  }
+  len_eP2 <- length(ePartition2)
+  if (!all(unlist(ePartition2) %in% edges)){
+    while (len_eP2>0){
+      i <- len_eP2
+      id <- which(!ePartition2[[i]] %in% edges)
+      if (length(ePartition2[[i]]) == 1) {
+        ePartition2[[i]] <- NULL
+      } else {
+        ePartition2[[i]][id] <- NULL
+      }
+      len_eP2 <- len_eP2 - 1
+    }
+  }
 
   edgeColors <- union(ePartition1, ePartition2)
   while (any(table(unlist(edgeColors)) > 1)) {
@@ -80,6 +70,7 @@ meet <- function(vPartition1, ePartition1, vPartition2, ePartition2) {
       edgeColors[[k]] <- NULL
     }
   }
+
   edgeColors <- order_list(edgeColors)
   vertices <- order_list(vertices)
   return(list(vertices, edgeColors))
@@ -97,22 +88,41 @@ meet <- function(vPartition1, ePartition1, vPartition2, ePartition2) {
 #'
 #' join(vPartition1, ePartition1, vPartition2, ePartition2)
 join <- function(vPartition1, ePartition1, vPartition2, ePartition2) {
-  vertices <- intersect(vPartition1, vPartition2)
+  vertices <- list()
+  for (i in 1:length(vPartition1)){
+    for (j in 1: length(vPartition2)){
+      if (all(vPartition1[[i]] %in% vPartition2[[j]]) | all(vPartition2[[j]] %in% vPartition1[[i]])){
+        vertices <- append(vertices, list(intersect(vPartition1[[i]],vPartition2[[j]])))
+      }
+    }
+  }
+
   vert <- union(unlist(vPartition1), unlist(vPartition2))
   if (!all(vert %in% unlist(vertices))) {
     id <- vert[which(!vert %in% unlist(vertices))]
     vertices <- append(vertices, as.list(id))
   }
+
+  edgeColours <- list()
+  for (i in 1:length(ePartition1)){
+    for (j in 1: length(ePartition2)){
+      if (all(ePartition1[[i]] %in% ePartition2[[j]])){
+        edgeColours <- append(edgeColours, list(intersect(ePartition1[[i]],ePartition2[[j]])))
+      }
+      if (all(ePartition2[[j]] %in% ePartition1[[i]])){
+        edgeColours <- append(edgeColours, list(intersect(ePartition1[[i]],ePartition2[[j]])))
+      }
+    }
+  }
+
   edges1 <- unique(unlist(ePartition1))
   edges2 <- unique(unlist(ePartition2))
   edge <- union(edges1, edges2)
-  eg1 <- append(ePartition1, as.list(setdiff(edges2, edges1)))
-  eg2 <- append(ePartition2, as.list(setdiff(edges1, edges2)))
-  edgeColours <- intersect(eg1, eg2)
   if (!all(edge %in% unlist(edgeColours))) {
     id <- edge[which(!edge %in% unlist(edgeColours))]
     edgeColours <- append(edgeColours, as.list(id))
   }
+
   edgeColours <- order_list(edgeColours)
   vertices <- order_list(vertices)
   return(list(vertices, edgeColours))
