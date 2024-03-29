@@ -25,14 +25,26 @@ meet <- function(vPartition1, ePartition1, vPartition2, ePartition2) {
       }
     }
   }
-  for (i in 1:length(ePartition2)) {
-    if (!all(ePartition2[[i]] %in% edges)) {
+  # for (i in 1:length(ePartition2)) {
+  #   if (!all(ePartition2[[i]] %in% edges)) {
+  #     id <- which(!ePartition2[[i]] %in% edges)
+  #     if (length(ePartition2[[i]]) == 1) {
+  #       ePartition2[[i]] <- NULL
+  #     } else {
+  #       ePartition2[[i]][id] <- NULL
+  #     }
+  #   }
+  # }
+  len_eP2 <- length(ePartition2)
+  if (!all(unlist(ePartition2)%in%edges)){
+    while (len_eP2>0){
       id <- which(!ePartition2[[i]] %in% edges)
-      if (length(ePartition2[[i]] == 1)) {
+      if (length(ePartition2[[i]]) == 1) {
         ePartition2[[i]] <- NULL
       } else {
         ePartition2[[i]][id] <- NULL
       }
+      len_eP2 <- len_eP2 - 1
     }
   }
 
@@ -68,6 +80,8 @@ meet <- function(vPartition1, ePartition1, vPartition2, ePartition2) {
       edgeColors[[k]] <- NULL
     }
   }
+  edgeColors <- order_list(edgeColors)
+  vertices <- order_list(vertices)
   return(list(vertices, edgeColors))
 }
 
@@ -99,5 +113,16 @@ join <- function(vPartition1, ePartition1, vPartition2, ePartition2) {
     id <- edge[which(!edge %in% unlist(edgeColours))]
     edgeColours <- append(edgeColours, as.list(id))
   }
+  edgeColours <- order_list(edgeColours)
+  vertices <- order_list(vertices)
   return(list(vertices, edgeColours))
 }
+
+order_list <- function(list){
+  ordered_list <- lapply(list, sort)
+  sorted_list <- ordered_list[order(sapply(ordered_list, `[`, 1))]
+  return(sorted_list)
+}
+
+
+
