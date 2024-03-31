@@ -128,10 +128,10 @@ join <- function(vPartition1, ePartition1, vPartition2, ePartition2) {
   return(list(vertices, edgeColours))
 }
 
-order_list <- function(list){
-  ordered_list <- lapply(list, sort)
-  sorted_list <- ordered_list[order(sapply(ordered_list, `[`, 1))]
-  return(sorted_list)
+order_list <- function(my_list){
+  ordered_my_list <- lapply(my_list, sort)
+  sorted_my_list <- ordered_my_list[order(sapply(ordered_my_list, `[`, 1))]
+  return(sorted_my_list)
 }
 
 
