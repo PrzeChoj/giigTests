@@ -1,9 +1,12 @@
 test_that("get_number_of_an_edge works", {
   expect_equal(get_number_of_an_edge(4, 2, 4), 5)
   expect_equal(get_number_of_an_edge(4, 3, 4), 6)
+  expect_equal(get_number_of_an_edge(6, 4, 6), 14)
+
 
   expect_equal(get_edge_of_a_number(4, 2), c(1, 3))
   expect_equal(get_edge_of_a_number(4, 4), c(2, 3))
+  expect_equal(get_edge_of_a_number(6, 10), c(3, 4))
 
   p <- 10
   n <- 38
