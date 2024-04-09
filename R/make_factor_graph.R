@@ -23,6 +23,20 @@ make_factor_graph_for_nauty <- function(vPartition, ePartition) {
   })
   factor_vPartition <- c(vPartition, new_ePartition)
 
+  # Change vertices numeration from starting with 1 to starting with 0:
+  factor_vPartition <- lapply(factor_vPartition, function(x){x - 1})
+  # Change factor_vPartition, to lab and ptn to be readable with nauty:
+  lab <- numeric(new_p)
+  ptn <- rep(1, new_p)
+  i <- 1
+  for(vartex_color in 1:length(factor_vPartition)){
+    lab[i:(i + length(factor_vPartition[[vartex_color]]) - 1)] <- factor_vPartition[[vartex_color]]
+    ptn[i + length(factor_vPartition[[vartex_color]]) - 1] <- 0
+
+    i <- i + length(factor_vPartition[[vartex_color]])
+  }
+
+  # get edges:
   factor_edges_from <- numeric(length(all_edges) * 2)
   factor_edges_to <- numeric(length(all_edges) * 2)
   for (edge_number in 1:length(all_edges)) {
@@ -34,12 +48,12 @@ make_factor_graph_for_nauty <- function(vPartition, ePartition) {
   }
 
   # Change vertices numeration from starting with 1 to starting with 0:
-  factor_vPartition <- lapply(factor_vPartition, function(x){x - 1})
   factor_edges_from <- factor_edges_from - 1
   factor_edges_to <- factor_edges_to - 1
 
   list(
-    factor_vPartition,
+    lab,
+    ptn,
     factor_edges_from,
     factor_edges_to
   )
