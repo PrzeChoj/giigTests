@@ -4,9 +4,10 @@ test_that("make_factor_graph works", {
   ePartition <- list(1, c(3, 4), 6)
 
   my_factor_graph <- list(
-    list(c(1, 2), c(3, 4), 5L, 6:7, 8L),
-    c(4, 10, 5, 16, 6, 21, 13, 18),
-    c(1, 3, 4, 6)
+    list(c(0, 1), c(2, 3), 4, c(5, 6), 7),
+    c(0, 1, 0, 3, 1, 2, 2, 3),
+    c(4, 4, 5, 5, 6, 6, 7, 7)
   )
-  expect_equal(make_factor_graph(vPartition, ePartition), my_factor_graph)
+
+  expect_equal(make_factor_graph_for_nauty(vPartition, ePartition), my_factor_graph)
 })
