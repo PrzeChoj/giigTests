@@ -29,7 +29,7 @@ make_factor_graph_for_nauty <- function(vPartition, ePartition) {
   factor_vPartition <- c(vPartition, new_ePartition)
 
   # Change vertices numeration from starting with 1 to starting with 0:
-  factor_vPartition <- lapply(factor_vPartition, function(x){x - 1})
+  factor_vPartition <- sapply(factor_vPartition, function(x){min(x) - 1})
 
   # get edges:
   factor_edges_from <- numeric(length(all_edges) * 2)
